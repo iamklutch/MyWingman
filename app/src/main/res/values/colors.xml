@@ -3,4 +3,6 @@
     <color name="pressed_blue_button">#ff242aff</color>
     <color name="focused_blue_button">#ff3d3dff</color>
     <color name="blue_button">#ff777bff</color>
+    <color name="default_color">#ff777bff</color>
+    <color name="pressed_color">#ff242aff</color>
 </resources>

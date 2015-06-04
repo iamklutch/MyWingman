@@ -23,4 +23,10 @@
     <string name="Username_hint">Username</string>
     <string name="app_title">MyWingman</string>
     <string name="dev_title">A YukiDev Project</string>
+    <string name="title_activity_get_airmen">GetAirmenActivity</string>
+    <string name="airman_fragment_title">Airmen</string>
+    <string name="action_about">About</string>
+    <string name="toast_about">All about toast</string>
+    <string name="encryption_password">UserName</string>
+    <string name="decryption_password">UserName</string>
 </resources>
