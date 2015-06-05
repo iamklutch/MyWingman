@@ -29,4 +29,7 @@
     <string name="toast_about">All about toast</string>
     <string name="encryption_password">UserName</string>
     <string name="decryption_password">UserName</string>
+    <string name="title_activity_add_airman">AddAirmanActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

@@ -43,7 +43,11 @@
         <activity
             android:name=".activites.ViewAirmenActivity"
             android:label="@string/title_activity_get_airmen"
-            android:parentActivityName=".activites.MainActivity">
+            android:parentActivityName=".activites.MainActivity" >
+        </activity>
+        <activity
+            android:name=".activites.AddAirmanActivity"
+            android:label="@string/title_activity_add_airman" >
         </activity>
     </application>
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@android:color/darker_gray">
+
+    <ImageView
+        android:id="@+id/airmanRankImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/down"/>
+
+    <TextView
+        android:id="@+id/airmanLastNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/airmanRankImageView"
+        android:layout_toRightOf="@+id/airmanRankImageView"
+        android:text="Last Name"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/airmanAgeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/airmanLastNameTextView"
+        android:layout_marginLeft="10sp"
+        android:text="Age"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <TextView
+        android:id="@+id/airmanFirstNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/airmanLastNameTextView"
+        android:layout_toEndOf="@+id/airmanRankImageView"
+        android:layout_toRightOf="@+id/airmanRankImageView"
+        android:text="First Name"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+</RelativeLayout>
