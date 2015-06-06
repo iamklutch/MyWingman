@@ -72,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:entries="@array/rank_spinner_items"
                 android:background="@android:drawable/btn_dropdown"
                 android:id="@+id/rankSpinner">
                 </Spinner>

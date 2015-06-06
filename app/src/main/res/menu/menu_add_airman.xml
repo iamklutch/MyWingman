@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="jameshigashiyama.com.mywingman.activites.AddAirmanActivity">
     <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
+          android:title="@string/action_save_airman"
           android:orderInCategory="100"
           app:showAsAction="never"/>
 </menu>

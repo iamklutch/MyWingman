@@ -14,23 +14,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
 
     public static final String AIRMAN_TABLE = "airmen";
-    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_LAST_NAME = "last_name";
+    public static final String COLUMN_FIRST_NAME = "first_name";
     public static final String COLUMN_AGE = "age";
     public static final String COLUMN_RANK = "rank";
     public static final String COLUMN_RANK_VALUE = "rank_value";
     public static final String COLUMN_LAST_FOUR = "last_four";
+    // dates are in epoch time
     public static final String COLUMN_DOR = "date_of_rank";
-    public static final String COLUMN_DATE_ENTERED_SERVICE = "date_entered_service";
+    public static final String COLUMN_DES = "date_entered_service";
 
 
 
     // when upgrading, add the new columns and increment the VERSION above
     private static final String CREATE_AIRMAN_TABLE =
             "CREATE TABLE " + AIRMAN_TABLE + " ( " + BaseColumns._ID +
-                    " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME + " TEXT, " +
-                    COLUMN_AGE + " INTEGER, " + COLUMN_RANK + " TEXT, " + COLUMN_RANK_VALUE +
-                    " INTEGER, " + COLUMN_LAST_FOUR + " INTEGER, " + COLUMN_DOR + " TEXT, " +
-                    COLUMN_DATE_ENTERED_SERVICE + "TEXT)";
+                    " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_LAST_NAME + " TEXT, " +
+                    COLUMN_FIRST_NAME + " TEXT, " + COLUMN_AGE + " TEXT, " + COLUMN_RANK +
+                    " TEXT, " + COLUMN_RANK_VALUE + " INTEGER, " + COLUMN_LAST_FOUR + " TEXT, "
+                    + COLUMN_DOR + " TEXT, " + COLUMN_DES + "TEXT)";
 
     public DatabaseHelper(Context context) {super(context, DB_NAME, null, VERSION);}
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.AdRequest;
@@ -32,14 +33,14 @@ public class MainActivity extends ActionBarActivity {
 //            navigateToLogin();
 //        }
 //        else {
-//            Log.i(TAG, currentUser.getUsername());
+//            Toast.makeText(this, "Hello " + currentUser.getUsername(), Toast.LENGTH_LONG).show();
 //
 //        }
-//
+
 
         //comment this out when database is ready, this skips login/signup.
 
-        navagateToAddAirman();
+        navigateToAddAirman();
 
         AdView mAdView = (AdView) findViewById(R.id.adViewMain);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -54,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    private void navagateToAddAirman() {
+    private void navigateToAddAirman() {
         Intent intent = new Intent(this, AddAirmanActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

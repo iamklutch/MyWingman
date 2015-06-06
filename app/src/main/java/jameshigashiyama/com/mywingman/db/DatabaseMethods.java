@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 
 import jameshigashiyama.com.mywingman.R;
@@ -32,7 +34,9 @@ public class DatabaseMethods {
     }
 
     public ArrayList<Airman> readAirman(){
-        String cipher = mContext.getString(R.string.decryption_password);
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String cipher = currentUser.getObjectId();
 
         SQLiteDatabase database = open();
 
@@ -44,17 +48,38 @@ public class DatabaseMethods {
 
         do {
 
+            // id(int), lastName, firstName, age, rank, rankValue(int), Last4, DOR, DES
             int id = cursor.getInt(0);
-            int age = cursor.getInt(2);
-            String name = cursor.getString(1);
-            String rank = cursor.getString(3);
-            String decryptedName = decryptThis(cipher, name);
+            String lastName = cursor.getString(1);
+            String firstName = cursor.getString(2);
+            String age = cursor.getString(3);
+            String rank = cursor.getString(4);
+            int rankValue = cursor.getInt(5);
+            String lastFour = cursor.getString(6);
+            String DOR = cursor.getString(7);
+            String DES = cursor.getString(8);
+
+            String decryptedLastName = decryptThis(cipher, lastName);
+            String decryptedFirstName = decryptThis(cipher, firstName);
+            String decryptedAge = decryptThis(cipher, age);
             String decryptedRank = decryptThis(cipher, rank);
-            Airman airman = new Airman(id, decryptedName, age, decryptedRank);
+            String decryptedLastFour = decryptThis(cipher, lastFour);
+            String decryptedDOR = decryptThis(cipher, DOR);
+            String decryptedDES = decryptThis(cipher, DES);
+
+            Airman airman = new Airman(id, decryptedLastName, decryptedFirstName, decryptedAge,
+                    decryptedRank, rankValue, decryptedLastFour, decryptedDOR, decryptedDES);
+
             airman.setId(id);
-            airman.setName(decryptedName);
-            airman.setAge(age);
+            airman.setLastName(decryptedLastName);
+            airman.setFirstName(decryptedFirstName);
+            airman.setAge(decryptedAge);
             airman.setRank(decryptedRank);
+            airman.setRankValue(rankValue);
+            airman.setLastFour(decryptedLastFour);
+            airman.setDOR(decryptedDOR);
+            airman.setDES(decryptedDES);
+
             airmen.add(airman);
 
         }while(cursor.moveToNext());
@@ -77,9 +102,14 @@ public class DatabaseMethods {
         database.beginTransaction();
 
         ContentValues airmanValues = new ContentValues();
-        airmanValues.put(DatabaseHelper.COLUMN_NAME, airman.getName());
+        airmanValues.put(DatabaseHelper.COLUMN_LAST_NAME, airman.getLastName());
+        airmanValues.put(DatabaseHelper.COLUMN_FIRST_NAME, airman.getFirstName());
         airmanValues.put(DatabaseHelper.COLUMN_AGE, airman.getAge());
         airmanValues.put(DatabaseHelper.COLUMN_RANK, airman.getRank());
+        airmanValues.put(DatabaseHelper.COLUMN_RANK_VALUE, airman.getRankValue());
+        airmanValues.put(DatabaseHelper.COLUMN_LAST_FOUR, airman.getLastFour());
+        airmanValues.put(DatabaseHelper.COLUMN_DOR, airman.getDOR());
+        airmanValues.put(DatabaseHelper.COLUMN_DES, airman.getDES());
 
         database.insert(DatabaseHelper.AIRMAN_TABLE, null, airmanValues);
         database.setTransactionSuccessful();

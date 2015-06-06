@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyWingman</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_save_airman">Save Airman</string>
     <string name="error_title">Something\'s a little screwy . . .</string>
     <string name="error_message">We\'ll look into this!</string>
     <string name="error_button_text">OK</string>
@@ -31,5 +31,16 @@
     <string name="decryption_password">UserName</string>
     <string name="title_activity_add_airman">AddAirmanActivity</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string-array name="rank_spinner_items">
+        <item>AB</item>
+        <item>Amn</item>
+        <item>A1C</item>
+        <item>SrA</item>
+        <item>SSgt</item>
+        <item>TSgt</item>
+        <item>MSgt</item>
+        <item>SMSgt</item>
+        <item>CMSgt</item>
+    </string-array>
+    
 </resources>
