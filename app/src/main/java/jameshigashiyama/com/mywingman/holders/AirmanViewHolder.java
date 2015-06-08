@@ -12,16 +12,16 @@ import jameshigashiyama.com.mywingman.R;
  */
 public class AirmanViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView airmanNameView;
+    public TextView airmanLastNameView;
     public TextView airmanAgeView;
-    public TextView airmanRankView;
+    public TextView airmanFirstNameView;
     public ImageView rankImageView;
 
     public AirmanViewHolder(View itemView) {
         super(itemView);
         rankImageView = (ImageView) itemView.findViewById(R.id.airmanRankImageView);
-        airmanNameView = (TextView) itemView.findViewById(R.id.airmanLastNameTextView);
+        airmanLastNameView = (TextView) itemView.findViewById(R.id.airmanLastNameTextView);
         airmanAgeView = (TextView) itemView.findViewById(R.id.airmanAgeTextView);
-        airmanRankView = (TextView) itemView.findViewById(R.id.airmanFirstNameTextView);
+        airmanFirstNameView = (TextView) itemView.findViewById(R.id.airmanFirstNameTextView);
     }
 }

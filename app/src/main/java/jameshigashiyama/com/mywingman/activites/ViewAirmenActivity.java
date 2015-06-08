@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,24 +90,24 @@ public class ViewAirmenActivity extends Activity {
 
         private RecyclerView mRecyclerView;
         private AirmanAdapter mAirmanAdapter;
-
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             DatabaseMethods dataSource = new DatabaseMethods(this.getActivity());
-            ArrayList<Airman> airmen = dataSource.read();
+            ArrayList<Airman> airmen = dataSource.readAirmen();
             View rootView = inflater.inflate(R.layout.get_airman_fragment, container, false);
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.feedRecyclerView);
             mRecyclerView.setHasFixedSize(true);
             android.support.v7.widget.GridLayoutManager layoutManager =
-                    new android.support.v7.widget.GridLayoutManager(getActivity(),1);
+                    new android.support.v7.widget.GridLayoutManager(getActivity(), 1);
             mRecyclerView.setLayoutManager(layoutManager);
-            mAirmanAdapter = new AirmanAdapter(this.getActivity(),airmen);
+            mAirmanAdapter = new AirmanAdapter(this.getActivity(), airmen);
             mRecyclerView.setAdapter(mAirmanAdapter);
-            return rootView;
+             return rootView;
         }
     }
 }

@@ -30,6 +30,11 @@
     <string name="encryption_password">UserName</string>
     <string name="decryption_password">UserName</string>
     <string name="title_activity_add_airman">AddAirmanActivity</string>
+    <string name="add_airman_cancel">Cancel</string>
+    <string name="add_airman_save">Save this Airman</string>
+    <string name="last_four_edit">Last Four SSN</string>
+    <string name="des_text_view">Date Entered Service</string>
+    <string name="des_button">DES</string>
 
     <string-array name="rank_spinner_items">
         <item>AB</item>

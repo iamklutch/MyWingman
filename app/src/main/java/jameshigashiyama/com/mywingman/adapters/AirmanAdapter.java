@@ -12,9 +12,10 @@ import java.util.List;
 import jameshigashiyama.com.mywingman.Airman;
 import jameshigashiyama.com.mywingman.R;
 import jameshigashiyama.com.mywingman.holders.AirmanViewHolder;
+import jameshigashiyama.com.mywingman.support.RankHelper;
 
 /**
- * Created by JAmes o  n 4 mat.
+ * Created by James on 6 June 15
  */
 public class AirmanAdapter extends RecyclerView.Adapter<AirmanViewHolder> {
 
@@ -37,10 +38,12 @@ public class AirmanAdapter extends RecyclerView.Adapter<AirmanViewHolder> {
     @Override
     public void onBindViewHolder(AirmanViewHolder itemViewHolder, int i) {
         Airman airman = mAirmanItems.get(i);
-        itemViewHolder.airmanNameView.setText("" + airman.getName());
+        RankHelper rank = new RankHelper();
+        int rankImage = rank.RankIconHelper(airman.getRankValue());
+        itemViewHolder.airmanLastNameView.setText("" + airman.getLastName());
         itemViewHolder.airmanAgeView.setText("" + airman.getAge());
-        itemViewHolder.airmanRankView.setText("" + airman.getRank());
-        itemViewHolder.rankImageView.setImageResource(R.drawable.down);
+        itemViewHolder.airmanFirstNameView.setText("" + airman.getFirstName());
+        itemViewHolder.rankImageView.setImageResource(rankImage);
     }
 
     @Override

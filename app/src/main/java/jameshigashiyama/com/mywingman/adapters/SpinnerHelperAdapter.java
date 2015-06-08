@@ -20,9 +20,9 @@ public class SpinnerHelperAdapter  implements AdapterView.OnItemSelectedListener
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, "Made it to the onItemSelected method");
-        Toast.makeText(parent.getContext(), "Spinner Item selected: " + parent.getItemAtPosition(position).toString()
-                , Toast.LENGTH_LONG).show();
+//        Log.d(TAG, "Made it to the onItemSelected method");
+//        Toast.makeText(parent.getContext(), "Spinner Item selected: " + parent.getItemAtPosition(position).toString()
+//               , Toast.LENGTH_LONG).show();
 
     }
 

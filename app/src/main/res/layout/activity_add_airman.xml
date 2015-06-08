@@ -88,4 +88,94 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout4">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/DORdateButton"
+            android:text="DOR"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:text="Date of Rank"
+            android:textSize="24sp"
+            android:id="@+id/DORtextView"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout5">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/DESdateButton"
+            android:text="@string/des_button"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:text="@string/des_text_view"
+            android:id="@+id/DEStextView"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout6">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lastFourEditText"
+            style="@style/EditText"
+            android:inputType="number"
+            android:hint="@string/last_four_edit"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/saveButton"
+            android:text="@string/add_airman_save"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancelButton"
+            android:text="@string/add_airman_cancel"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

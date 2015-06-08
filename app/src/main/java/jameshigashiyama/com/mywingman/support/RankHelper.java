@@ -2,37 +2,48 @@ package jameshigashiyama.com.mywingman.support;
 
 import android.widget.Switch;
 
+import jameshigashiyama.com.mywingman.R;
+
 /**
  * Created by James on 6/5/2015.
  */
 public class RankHelper {
 
-    public String RankNameHelper (int rankValue){
-        String rankName = "AB";
+    public int RankIconHelper (int rankValue){
+        int rankIcon = R.drawable.e1;
 
         switch (rankValue) {
 
             case 0:
-                rankName = "AB";
+                rankIcon = R.drawable.e1;
+                break;
             case 1:
-                rankName = "Amn";
+                rankIcon = R.drawable.e2;
+                break;
             case 2:
-                rankName = "A1C";
+                rankIcon = R.drawable.e3;
+                break;
             case 3:
-                rankName = "SrA";
+                rankIcon = R.drawable.e4;
+                break;
             case 4:
-                rankName = "SSgt";
+                rankIcon = R.drawable.e5;
+                break;
             case 5:
-                rankName = "TSgt";
+                rankIcon = R.drawable.e6;
+                break;
             case 6:
-                rankName = "MSgt";
+                rankIcon = R.drawable.e7;
+                break;
             case 7:
-                rankName = "SMSgt";
+                rankIcon = R.drawable.e8;
+                break;
             case 8:
-                rankName = "CMSgt";
+                rankIcon = R.drawable.e9;
+                break;
         }
 
-        return rankName;
+        return rankIcon;
     }
 
     public int RankValueHelper (String rankName){
@@ -42,22 +53,31 @@ public class RankHelper {
 
             case "AB":
                 rankValue = 0;
+                break;
             case "Amn":
                 rankValue = 1;
+                break;
             case "A1C":
                 rankValue = 2;
+                break;
             case "SrA":
                 rankValue = 3;
+                break;
             case "SSgt":
                 rankValue = 4;
+                break;
             case "TSgt":
                 rankValue = 5;
+                break;
             case "MSgt":
                 rankValue = 6;
+                break;
             case "SMSgt":
                 rankValue = 7;
+                break;
             case "CMSgt":
                 rankValue = 8;
+                break;
         }
 
         return rankValue;

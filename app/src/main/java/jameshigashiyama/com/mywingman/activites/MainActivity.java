@@ -1,9 +1,11 @@
 package jameshigashiyama.com.mywingman.activites;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
 
 import jameshigashiyama.com.mywingman.R;
+import jameshigashiyama.com.mywingman.db.DatabaseMethods;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -24,28 +27,25 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // get a current user (if one) and sends to login if null
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+        ParseUser currentUser = ParseUser.getCurrentUser();
 
-//        // get a current user (if one) and sends to login if null
-//        ParseAnalytics.trackAppOpenedInBackground(getIntent());
-//        ParseUser currentUser = ParseUser.getCurrentUser();
-//
-//        if(currentUser == null) {
-//            navigateToLogin();
-//        }
-//        else {
-//            Toast.makeText(this, "Hello " + currentUser.getUsername(), Toast.LENGTH_LONG).show();
-//
-//        }
-
-
-        //comment this out when database is ready, this skips login/signup.
-
-        navigateToAddAirman();
+        if (currentUser == null) {
+            navigateToLogin();
+        } else if (currentUser.isNew()) {
+            DatabaseMethods createDummy = new DatabaseMethods(this);
+            createDummy.createDummyAirman();
+            navigateToAddAirman();
+        } else {
+            Toast.makeText(this, "Welcome back " +
+                    currentUser.getUsername(), Toast.LENGTH_LONG).show();
+            navigateToViewAirmen();
+        }
 
         AdView mAdView = (AdView) findViewById(R.id.adViewMain);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
     }
 
     private void navigateToLogin() {
@@ -57,6 +57,13 @@ public class MainActivity extends ActionBarActivity {
 
     private void navigateToAddAirman() {
         Intent intent = new Intent(this, AddAirmanActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void navigateToViewAirmen() {
+        Intent intent = new Intent(this, ViewAirmenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -89,4 +96,16 @@ public class MainActivity extends ActionBarActivity {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error_dialog");
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        boolean isAvailable = false;
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            isAvailable = true;
+        }
+        return isAvailable;
+    }
+
 }

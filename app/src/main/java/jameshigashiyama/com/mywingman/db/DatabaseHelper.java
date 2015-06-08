@@ -32,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_LAST_NAME + " TEXT, " +
                     COLUMN_FIRST_NAME + " TEXT, " + COLUMN_AGE + " TEXT, " + COLUMN_RANK +
                     " TEXT, " + COLUMN_RANK_VALUE + " INTEGER, " + COLUMN_LAST_FOUR + " TEXT, "
-                    + COLUMN_DOR + " TEXT, " + COLUMN_DES + "TEXT)";
+                    + COLUMN_DOR + " TEXT, " + COLUMN_DES + " TEXT)";
 
     public DatabaseHelper(Context context) {super(context, DB_NAME, null, VERSION);}
 
