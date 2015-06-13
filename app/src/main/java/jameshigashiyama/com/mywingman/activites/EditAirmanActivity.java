@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,40 +25,51 @@ import jameshigashiyama.com.mywingman.Airman;
 import jameshigashiyama.com.mywingman.R;
 import jameshigashiyama.com.mywingman.adapters.SpinnerHelperAdapter;
 import jameshigashiyama.com.mywingman.db.DatabaseMethods;
+import jameshigashiyama.com.mywingman.holders.AirmanViewHolder;
 import jameshigashiyama.com.mywingman.support.RankHelper;
 
-public class AddAirmanActivity extends ActionBarActivity {
+public class EditAirmanActivity extends ActionBarActivity {
 
-    @InjectView(R.id.lastNameEditText)EditText mLastName;
-    @InjectView(R.id.firstNameEditText)EditText mFirstName;
-    @InjectView(R.id.lastFourEditText)EditText mLastFour;
-    @InjectView(R.id.DORdateButton)Button mDORButton;
-    @InjectView(R.id.DESdateButton)Button mDESButton;
-    @InjectView(R.id.DORtextView)TextView mDORText;
-    @InjectView(R.id.DEStextView)TextView mDESText;
+    @InjectView(R.id.viewLastNameAEA)    TextView mViewLastNameText;
+    @InjectView(R.id.editLastNameAEA)    TextView mEditLastNameText;
+    @InjectView(R.id.viewFirstNameAEA)    TextView mViewFirstNameText;
+    @InjectView(R.id.editFirstNameAEA)    TextView mEditFirstNameText;
+    @InjectView(R.id.viewLastFourAEA)    TextView mViewLastFour;
+    @InjectView(R.id.DORtextViewAEA)    TextView mDORText;
+    @InjectView(R.id.DEStextViewAEA)    TextView mDESText;
+    @InjectView(R.id.DORdateButtonAEA)    Button mDORButton;
+    @InjectView(R.id.DESdateButtonAEA)    Button mDESButton;
     private String mAge;
     private String mRank;
     private Airman mAirman;
+    private int mAgeSetSpinner, mRankSetSpinner;
     private Spinner ageSpin, rankSpin;
     private int mYear, mMonth, mDay;
+    private int mDatabaseId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_airman);
+        setContentView(R.layout.activity_edit_airman);
         ButterKnife.inject(this);
-        setTitle("Add Airman");
+        setTitle("View/Edit");
+
+        Intent intent = getIntent();
+        mDatabaseId = intent.getIntExtra("ViewID",0);
+        showCurrentAirman(mDatabaseId);
 
         addItemsOnAgeSpinner();
         addListenerOnSpinnerItemSelection();
         addListenerOnButton();
+
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_airman, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_airman, menu);
         return true;
     }
 
@@ -70,62 +80,65 @@ public class AddAirmanActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection
+        //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.action_save_airman:
-                saveAirman();
-
-                Intent intent = new Intent(AddAirmanActivity.this, AddAirmanActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                break;
-
-            case R.id.action_cancel:
+            case R.id.action_edit_cancel:
                 finish();
-                intent = new Intent(AddAirmanActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                break;
+            case R.id.action_save_airman:
+                updateAirman();
+                Intent intent = new Intent(this, ViewAirmenActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
-
-            case R.id.action_go_back:
-                intent = new Intent(AddAirmanActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            case R.id.action_edit_delete:
+                DatabaseMethods dbm = new DatabaseMethods(EditAirmanActivity.this);
+                dbm.delete(mDatabaseId);
+                intent = new Intent(this, ViewAirmenActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
+
     public void addItemsOnAgeSpinner() {
 
-        ageSpin = (Spinner)findViewById(R.id.ageSpinner);
+        ageSpin = (Spinner) findViewById(R.id.ageSpinnerAEA);
         Number[] ageArray = new Number[42];
-            for (int i = 0, a = 18; i < ageArray.length; i++, a++) {
-                    ageArray[i] = a;
-            }
+        for (int i = 0, a = 18; i < ageArray.length; i++, a++) {
+            ageArray[i] = a;
+        }
 
 
-        ArrayAdapter<Number>adapter = new ArrayAdapter<>
-                (AddAirmanActivity.this, android.R.layout.simple_spinner_item, ageArray);
+        ArrayAdapter<Number> adapter = new ArrayAdapter<>
+                (EditAirmanActivity.this, android.R.layout.simple_spinner_item, ageArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ageSpin.setAdapter(adapter);
+
+        ageSpin.setSelection(mAgeSetSpinner - 18);
     }
 
     public void addListenerOnSpinnerItemSelection() {
 
-        ageSpin = (Spinner)findViewById(R.id.ageSpinner);
-        rankSpin = (Spinner)findViewById(R.id.rankSpinner);
+        ageSpin = (Spinner) findViewById(R.id.ageSpinnerAEA);
+        rankSpin = (Spinner) findViewById(R.id.rankSpinnerAEA);
+
+
+        rankSpin.setSelection(mRankSetSpinner);
+
         ageSpin.setOnItemSelectedListener(new SpinnerHelperAdapter());
         rankSpin.setOnItemSelectedListener(new SpinnerHelperAdapter());
+
 
     }
 
 
     public void addListenerOnButton() {
-//        ageSpin = (Spinner)findViewById(R.id.ageSpinner);
-//        rankSpin = (Spinner)findViewById(R.id.rankSpinner);
+
         mDORButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,21 +158,19 @@ public class AddAirmanActivity extends ActionBarActivity {
 
     @SuppressWarnings("deprecation")
     @Override
-    protected Dialog onCreateDialog (int id) {
+    protected Dialog onCreateDialog(int id) {
+        //gets current date
+        Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DATE);
+
         if (id == 999) {
-            Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DATE);
             DatePickerDialog DORDateDialog = new DatePickerDialog
                     (this, myDORListener, mYear, mMonth, mDay);
             DORDateDialog.getDatePicker().setSpinnersShown(true);
             return DORDateDialog;
-        }else {
-            Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DATE);
+        } else {
             DatePickerDialog DESDateDialog = new DatePickerDialog
                     (this, myDESListener, mYear, mMonth, mDay);
             DESDateDialog.getDatePicker().setMinDate(1788922061);
@@ -186,24 +197,24 @@ public class AddAirmanActivity extends ActionBarActivity {
         String encryptedData = "";
         try {
             Crypto crypto = new Crypto(pass);
-             encryptedData = crypto.encrypt(data);
+            encryptedData = crypto.encrypt(data);
         } catch (Exception e) {
             Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         return encryptedData;
     }
 
-    protected boolean saveAirman(){
+    protected boolean updateAirman() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         String cipher = currentUser.getObjectId();
 
-        String lastName = mLastName.getText().toString();
-        String firstName = mFirstName.getText().toString();
+        String lastName = mEditLastNameText.getText().toString();
+        String firstName = mEditFirstNameText.getText().toString();
         mAge = ageSpin.getSelectedItem().toString();
         mRank = rankSpin.getSelectedItem().toString();
         RankHelper rank = new RankHelper();
         int rankValue = rank.RankValueHelper(mRank);
-        String lastFour = mLastFour.getText().toString();
+        String lastFour = mViewLastFour.getText().toString();
         String DOR = mDORText.getText().toString();
         String DES = mDESText.getText().toString();
 
@@ -227,13 +238,25 @@ public class AddAirmanActivity extends ActionBarActivity {
         mAirman.setDES(encryptedDES);
 
         // Saves everything in the Airman Object to the database
-        DatabaseMethods databaseMethods = new DatabaseMethods(AddAirmanActivity.this);
-        databaseMethods.create(mAirman);
+        DatabaseMethods databaseMethods = new DatabaseMethods(EditAirmanActivity.this);
+        databaseMethods.update(mAirman);
 
         return true;
     }
 
+    protected void showCurrentAirman(int id) {
+        DatabaseMethods db = new DatabaseMethods(this);
+        Airman airman = db.ReadSingleAirman(id);
+
+
+        mDatabaseId = airman.getId();
+        mAgeSetSpinner = Integer.parseInt(airman.getAge());
+        mRankSetSpinner = airman.getRankValue();
+        mViewLastNameText.setText(airman.getLastName());
+        mViewFirstNameText.setText(airman.getFirstName());
+        mDORText.setText(airman.getDOR());
+        mDESText.setText(airman.getDES());
+        mViewLastFour.setText(airman.getLastFour());
+
+    }
 }
-
-
-

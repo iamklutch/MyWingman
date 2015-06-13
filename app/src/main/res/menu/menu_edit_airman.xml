@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="jameshigashiyama.com.mywingman.activites.EditAirmanActivity">
+
+      <item android:id="@+id/action_save_airman"
+            android:title="@string/edit_airman_text"
+            android:orderInCategory="1"
+            android:icon="@drawable/ic_action_accept"
+            app:showAsAction="always"/>
+      <item android:id="@+id/action_edit_cancel"
+            android:title="@string/add_airman_cancel"
+            android:orderInCategory="2"
+            android:icon="@drawable/ic_action_cancel"
+            app:showAsAction="always"/>
+      <item android:id="@+id/action_edit_delete"
+            android:title="@string/add_airman_cancel"
+            android:orderInCategory="3"
+            android:icon="@drawable/ic_action_discard"
+            app:showAsAction="ifRoom"/>
+
+</menu>

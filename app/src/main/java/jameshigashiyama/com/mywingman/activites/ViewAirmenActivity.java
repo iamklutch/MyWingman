@@ -6,8 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,10 +24,11 @@ import jameshigashiyama.com.mywingman.db.DatabaseMethods;
 
 // made by me
 
-public class ViewAirmenActivity extends Activity {
+public class ViewAirmenActivity extends ActionBarActivity {
 
     private String mEncryptedData;
     PlaceholderFragment fragment;
+    public Number[] KEY;
 //    Intent serviceIntent;
 //    BroadcastReceiver mBroadcastReceiver;
 
@@ -35,6 +36,7 @@ public class ViewAirmenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_airmen);
+        setTitle("My Airmen");
 
         fragment = new PlaceholderFragment();
         if (savedInstanceState == null) {
@@ -42,6 +44,8 @@ public class ViewAirmenActivity extends Activity {
                     .add(R.id.container, fragment)
                     .commit();
         }
+
+        getActionBar();
 
     }
 
@@ -55,7 +59,9 @@ public class ViewAirmenActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //clears the menu so I can use a new one for this fragment
+        menu.clear();
+        getMenuInflater().inflate(R.menu.menu_get_airmen, menu);
         return true;
     }
 
@@ -66,10 +72,11 @@ public class ViewAirmenActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(this, getString(R.string.toast_about), Toast.LENGTH_LONG).show();
-            return false;
+        switch (id) {
+            case R.id.action_go_back:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -96,7 +103,9 @@ public class ViewAirmenActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-
+            // sets its own actionBar instead of using MainActivity's bar
+            // don't forget to add menu.clear(); to onCreateOptionsMenu
+            setHasOptionsMenu(true);
             DatabaseMethods dataSource = new DatabaseMethods(this.getActivity());
             ArrayList<Airman> airmen = dataSource.readAirmen();
             View rootView = inflater.inflate(R.layout.get_airman_fragment, container, false);
@@ -110,4 +119,5 @@ public class ViewAirmenActivity extends Activity {
              return rootView;
         }
     }
+
 }

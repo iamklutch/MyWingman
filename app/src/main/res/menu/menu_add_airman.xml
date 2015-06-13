@@ -2,8 +2,20 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="jameshigashiyama.com.mywingman.activites.AddAirmanActivity">
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_save_airman"
           android:title="@string/action_save_airman"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
+          android:orderInCategory="1"
+          android:icon="@drawable/ic_action_accept"
+          app:showAsAction="always"/>
+      <item android:id="@+id/action_cancel"
+            android:title="@string/action_save_airman"
+            android:orderInCategory="2"
+            android:icon="@drawable/ic_action_cancel"
+            app:showAsAction="always"/>
+      <item android:id="@+id/action_go_back"
+            android:title="@string/action_return"
+            android:orderInCategory="3"
+            android:icon="@drawable/ic_action_back"
+            app:showAsAction="always"/>
+
 </menu>

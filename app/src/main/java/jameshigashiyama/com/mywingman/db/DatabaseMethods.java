@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import jameshigashiyama.com.mywingman.Airman;
 import jameshigashiyama.com.mywingman.activites.Crypto;
-import jameshigashiyama.com.mywingman.activites.MainActivity;
 
 /**
  * Created   by James on 5/29/2015.
@@ -23,6 +22,8 @@ public class DatabaseMethods {
     private String mEncryptedData;
     private Context mContext;
     private DatabaseHelper mDatabaseHelper;
+    private Number[] mAirmanLocationKey;
+    private Number mAirmanId;
 
 
 
@@ -78,7 +79,7 @@ public class DatabaseMethods {
             if(DOR == null) {decryptedDOR = " ";}else{decryptedDOR = decryptThis(cipher, DOR);}
             if(DES == null) {decryptedDES = " ";}else{decryptedDES = decryptThis(cipher, DES);}
 
-            Airman airman = new Airman(id, decryptedLastName, decryptedFirstName, decryptedAge,
+            Airman airman = new Airman(id, lastName, firstName, decryptedAge,
                     decryptedRank, rankValue, decryptedLastFour, decryptedDOR, decryptedDES);
 
             airman.setId(id);
@@ -100,12 +101,86 @@ public class DatabaseMethods {
         return airmen;
     }
 
+    public Airman ReadSingleAirman(int viewId) {
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String cipher = currentUser.getObjectId();
+        setKeys();
+        mAirmanId = mAirmanLocationKey[viewId];
+        SQLiteDatabase database = open();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DatabaseHelper.AIRMAN_TABLE +
+                " WHERE _ID IS \"" + mAirmanId + "\"", null);
+    //    ArrayList<Airman> singleAirman = new ArrayList<>();
+
+
+        cursor.moveToFirst();
+
+        int id = cursor.getInt(0);
+        String lastName = cursor.getString(1);
+        String firstName = cursor.getString(2);
+        String age = cursor.getString(3);
+        String rank = cursor.getString(4);
+        int rankValue = cursor.getInt(5);
+        String lastFour = cursor.getString(6);
+        String DOR = cursor.getString(7);
+        String DES = cursor.getString(8);
+
+        String decryptedLastName, decryptedFirstName, decryptedAge, decryptedRank,
+                decryptedLastFour, decryptedDOR, decryptedDES;
+        if(lastName == null) { decryptedLastName = " ";}else{decryptedLastName = decryptThis(cipher, lastName);}
+        if(firstName == null) {decryptedFirstName = " ";}else{decryptedFirstName = decryptThis(cipher, firstName);}
+        if(age == null) {decryptedAge = " ";}else{decryptedAge= decryptThis(cipher, age);}
+        if(rank == null) {decryptedRank = " ";}else{decryptedRank = decryptThis(cipher, rank);}
+        if(lastFour == null) {decryptedLastFour = " ";}else{decryptedLastFour = decryptThis(cipher, lastFour);}
+        if(DOR == null) {decryptedDOR = " ";}else{decryptedDOR = decryptThis(cipher, DOR);}
+        if(DES == null) {decryptedDES = " ";}else{decryptedDES = decryptThis(cipher, DES);}
+
+        Airman SingleAirman = new Airman(id, lastName, firstName, decryptedAge,
+                decryptedRank, rankValue, decryptedLastFour, decryptedDOR, decryptedDES);
+
+        SingleAirman.setId(id);
+        SingleAirman.setLastName(decryptedLastName);
+        SingleAirman.setFirstName(decryptedFirstName);
+        SingleAirman.setAge(decryptedAge);
+        SingleAirman.setRank(decryptedRank);
+        SingleAirman.setRankValue(rankValue);
+        SingleAirman.setLastFour(decryptedLastFour);
+        SingleAirman.setDOR(decryptedDOR);
+        SingleAirman.setDES(decryptedDES);
+
+        cursor.close();
+        close(database);
+
+        return SingleAirman;
+    }
+
     private SQLiteDatabase open(){
         return mDatabaseHelper.getWritableDatabase();
     }
 
     private void close (SQLiteDatabase database) {
         database.close();
+    }
+
+    public void update (Airman airman) {
+        SQLiteDatabase database = open();
+        database.beginTransaction();
+
+        ContentValues airmanValues = new ContentValues();
+        airmanValues.put(DatabaseHelper.COLUMN_LAST_NAME, airman.getLastName());
+        airmanValues.put(DatabaseHelper.COLUMN_FIRST_NAME, airman.getFirstName());
+        airmanValues.put(DatabaseHelper.COLUMN_AGE, airman.getAge());
+        airmanValues.put(DatabaseHelper.COLUMN_RANK, airman.getRank());
+        airmanValues.put(DatabaseHelper.COLUMN_RANK_VALUE, airman.getRankValue());
+        airmanValues.put(DatabaseHelper.COLUMN_LAST_FOUR, airman.getLastFour());
+        airmanValues.put(DatabaseHelper.COLUMN_DOR, airman.getDOR());
+        airmanValues.put(DatabaseHelper.COLUMN_DES, airman.getDES());
+
+        database.update(DatabaseHelper.AIRMAN_TABLE, airmanValues, "_ID = " + airman.getId(), null);
+        database.setTransactionSuccessful();
+        database.endTransaction();
+        close(database);
+
     }
 
     public void create(Airman airman) {
@@ -152,6 +227,14 @@ public class DatabaseMethods {
         return true;
     }
 
+    public void delete(int airmanId){
+        SQLiteDatabase database = open();
+        database.beginTransaction();
+        database.delete(DatabaseHelper.AIRMAN_TABLE, " _ID = " + airmanId, null);
+        database.setTransactionSuccessful();
+        database.endTransaction();
+    }
+
     private String decryptThis(String pass, String encryptedData) {
         try {
             Crypto crypto = new Crypto(pass);
@@ -170,5 +253,16 @@ public class DatabaseMethods {
             Toast.makeText(mContext, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         return mEncryptedData;
+    }
+
+    private Number[] setKeys () {
+//        DatabaseMethods dataSource = new DatabaseMethods(DatabaseMethods.this);
+        ArrayList<Airman> airmen = readAirmen();
+
+        mAirmanLocationKey = new Number[airmen.size()];
+        for (int i = 0;i < airmen.size(); i++){
+            mAirmanLocationKey[i] = airmen.get(i).getId();
+        }
+        return mAirmanLocationKey;
     }
 }

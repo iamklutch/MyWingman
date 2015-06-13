@@ -155,27 +155,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout8"
-        style="@style/AuthLayout"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/saveButton"
-            android:text="@string/add_airman_save"
-            android:layout_weight="1"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cancelButton"
-            android:text="@string/add_airman_cancel"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -40,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
         } else {
             Toast.makeText(this, "Welcome back " +
                     currentUser.getUsername(), Toast.LENGTH_LONG).show();
-            navigateToViewAirmen();
+
         }
 
         AdView mAdView = (AdView) findViewById(R.id.adViewMain);
@@ -57,15 +58,11 @@ public class MainActivity extends ActionBarActivity {
 
     private void navigateToAddAirman() {
         Intent intent = new Intent(this, AddAirmanActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     private void navigateToViewAirmen() {
         Intent intent = new Intent(this, ViewAirmenActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
@@ -88,6 +85,13 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_logout:
                 ParseUser.logOut();
                 navigateToLogin();
+                break;
+            case R.id.action_add_airman:
+                navigateToAddAirman();
+                break;
+            case R.id.action_view_airmen:
+                navigateToViewAirmen();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

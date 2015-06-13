@@ -1,0 +1,212 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:background="@drawable/bg_gradient"
+                tools:context="jameshigashiyama.com.mywingman.activites.EditAirmanActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp">
+    <ViewSwitcher
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewSwitcherLastName">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/viewLastNameAEA"
+            style="@style/EditText"
+            android:clickable="true"
+            android:hint="@string/last_name_text"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editLastNameAEA"
+            style="@style/EditText"
+            android:hint="@string/last_name_text"/>
+
+
+    </ViewSwitcher>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        style="@style/AuthLayout"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginBottom="8dp">
+    <ViewSwitcher
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewSwitcherFirstName">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewFirstNameAEA"
+                style="@style/EditText"
+                android:clickable="true"
+                android:hint="@string/first_name_text"/>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editFirstNameAEA"
+                style="@style/EditText"
+                android:hint="@string/first_name_text"/>
+
+    </ViewSwitcher>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout2">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:drawable/btn_dropdown"
+            android:id="@+id/ageSpinnerAEA"
+            android:layout_marginBottom="8dp">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/rank_spinner_items"
+            android:background="@android:drawable/btn_dropdown"
+            android:id="@+id/rankSpinnerAEA">
+        </Spinner>
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/age"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textSize="24sp"-->
+            <!--android:id="@+id/editAgeAEA"-->
+            <!--android:layout_weight="3"/>-->
+
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/linearLayout4"-->
+        <!--style="@style/AuthLayout"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_below="@id/linearLayout3">-->
+
+        <!--<Spinner-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:entries="@array/rank_spinner_items"-->
+            <!--android:background="@android:drawable/btn_dropdown"-->
+            <!--android:id="@+id/rankSpinnerAEA">-->
+        <!--</Spinner>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Rank"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textSize="24sp"-->
+            <!--android:id="@+id/editRankAEA"-->
+            <!--android:layout_weight="3"/>-->
+
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout3">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/DORdateButtonAEA"
+            android:text="@string/edit_dor"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:text="Date of Rank"
+            android:textSize="24sp"
+            android:id="@+id/DORtextViewAEA"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout5">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/DESdateButtonAEA"
+            android:text="@string/edit_des"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:text="@string/des_text_view"
+            android:id="@+id/DEStextViewAEA"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        style="@style/AuthLayout"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout6">
+
+        <ViewSwitcher
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/viewSwitcherLastFour">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewLastFourAEA"
+                style="@style/EditText"
+                android:clickable="true"
+                android:hint="@string/last_name_text"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editLastFourAEA"
+            style="@style/EditText"
+            android:inputType="number"
+            android:hint="@string/last_four_edit"/>
+    </ViewSwitcher>
+    </LinearLayout>
+
+</RelativeLayout>

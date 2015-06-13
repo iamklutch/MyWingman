@@ -49,6 +49,14 @@
             android:name=".activites.AddAirmanActivity"
             android:label="@string/title_activity_add_airman" >
         </activity>
+        <activity
+            android:name=".activites.EditAirmanActivity"
+            android:label="@string/title_activity_edit_airman"
+            android:parentActivityName=".activites.ViewAirmenActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jameshigashiyama.com.mywingman.activites.ViewAirmenActivity" />
+        </activity>
     </application>
 
 </manifest>

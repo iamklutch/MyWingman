@@ -24,8 +24,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DOR = "date_of_rank";
     public static final String COLUMN_DES = "date_entered_service";
 
-
-
     // when upgrading, add the new columns and increment the VERSION above
     private static final String CREATE_AIRMAN_TABLE =
             "CREATE TABLE " + AIRMAN_TABLE + " ( " + BaseColumns._ID +
