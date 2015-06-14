@@ -35,12 +35,11 @@ public class MainActivity extends ActionBarActivity {
         if (currentUser == null) {
             navigateToLogin();
         } else if (currentUser.isNew()) {
-            DatabaseMethods createDummy = new DatabaseMethods(this);
-            createDummy.createDummyAirman();
+            DatabaseMethods db = new DatabaseMethods(this);
+            db.createDummyAirman();
             navigateToAddAirman();
         } else {
-            Toast.makeText(this, "Welcome back " +
-                    currentUser.getUsername(), Toast.LENGTH_LONG).show();
+
 
         }
 

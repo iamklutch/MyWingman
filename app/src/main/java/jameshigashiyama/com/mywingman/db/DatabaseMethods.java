@@ -162,7 +162,9 @@ public class DatabaseMethods {
         database.close();
     }
 
-    public void update (Airman airman) {
+    public void update (Airman airman, int viewId) {
+
+//        mAirmanId = mAirmanLocationKey[viewId];
         SQLiteDatabase database = open();
         database.beginTransaction();
 
@@ -176,7 +178,7 @@ public class DatabaseMethods {
         airmanValues.put(DatabaseHelper.COLUMN_DOR, airman.getDOR());
         airmanValues.put(DatabaseHelper.COLUMN_DES, airman.getDES());
 
-        database.update(DatabaseHelper.AIRMAN_TABLE, airmanValues, "_ID = " + airman.getId(), null);
+        database.update(DatabaseHelper.AIRMAN_TABLE, airmanValues, "_ID = " + viewId, null);
         database.setTransactionSuccessful();
         database.endTransaction();
         close(database);

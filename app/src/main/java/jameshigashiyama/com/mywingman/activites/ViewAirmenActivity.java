@@ -26,11 +26,7 @@ import jameshigashiyama.com.mywingman.db.DatabaseMethods;
 
 public class ViewAirmenActivity extends ActionBarActivity {
 
-    private String mEncryptedData;
     PlaceholderFragment fragment;
-    public Number[] KEY;
-//    Intent serviceIntent;
-//    BroadcastReceiver mBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +71,7 @@ public class ViewAirmenActivity extends ActionBarActivity {
         switch (id) {
             case R.id.action_go_back:
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
         }

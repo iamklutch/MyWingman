@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -13,18 +14,6 @@
         android:id="@+id/linearLayout"
         style="@style/AuthLayout"
         android:layout_marginBottom="8dp">
-    <ViewSwitcher
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/viewSwitcherLastName">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/viewLastNameAEA"
-            style="@style/EditText"
-            android:clickable="true"
-            android:hint="@string/last_name_text"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -32,9 +21,6 @@
             android:id="@+id/editLastNameAEA"
             style="@style/EditText"
             android:hint="@string/last_name_text"/>
-
-
-    </ViewSwitcher>
     </LinearLayout>
 
     <LinearLayout
@@ -42,28 +28,14 @@
         style="@style/AuthLayout"
         android:layout_below="@+id/linearLayout"
         android:layout_marginBottom="8dp">
-    <ViewSwitcher
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/viewSwitcherFirstName">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/viewFirstNameAEA"
-                style="@style/EditText"
-                android:clickable="true"
-                android:hint="@string/first_name_text"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editFirstNameAEA"
+            style="@style/EditText"
+            android:hint="@string/first_name_text"/>
 
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editFirstNameAEA"
-                style="@style/EditText"
-                android:hint="@string/first_name_text"/>
-
-    </ViewSwitcher>
     </LinearLayout>
 
     <LinearLayout
@@ -91,43 +63,8 @@
             android:id="@+id/rankSpinnerAEA">
         </Spinner>
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/age"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:textSize="24sp"-->
-            <!--android:id="@+id/editAgeAEA"-->
-            <!--android:layout_weight="3"/>-->
-
     </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/linearLayout4"-->
-        <!--style="@style/AuthLayout"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_below="@id/linearLayout3">-->
-
-        <!--<Spinner-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:entries="@array/rank_spinner_items"-->
-            <!--android:background="@android:drawable/btn_dropdown"-->
-            <!--android:id="@+id/rankSpinnerAEA">-->
-        <!--</Spinner>-->
-
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Rank"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:textSize="24sp"-->
-            <!--android:id="@+id/editRankAEA"-->
-            <!--android:layout_weight="3"/>-->
-
-    <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -186,19 +123,6 @@
         android:orientation="horizontal"
         android:layout_below="@id/linearLayout6">
 
-        <ViewSwitcher
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/viewSwitcherLastFour">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/viewLastFourAEA"
-                style="@style/EditText"
-                android:clickable="true"
-                android:hint="@string/last_name_text"/>
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -206,7 +130,16 @@
             style="@style/EditText"
             android:inputType="number"
             android:hint="@string/last_four_edit"/>
-    </ViewSwitcher>
     </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewEditAirman"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+    </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>

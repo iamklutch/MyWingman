@@ -26,6 +26,7 @@ import jameshigashiyama.com.mywingman.Airman;
 import jameshigashiyama.com.mywingman.R;
 import jameshigashiyama.com.mywingman.adapters.SpinnerHelperAdapter;
 import jameshigashiyama.com.mywingman.db.DatabaseMethods;
+import jameshigashiyama.com.mywingman.support.DateHelper;
 import jameshigashiyama.com.mywingman.support.RankHelper;
 
 public class AddAirmanActivity extends ActionBarActivity {
@@ -170,14 +171,18 @@ public class AddAirmanActivity extends ActionBarActivity {
     private DatePickerDialog.OnDateSetListener myDORListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mDORText.setText(monthOfYear + "/" + dayOfMonth + "/" + year);
+            DateHelper dh = new DateHelper();
+            String formattedDate = dh.DateChangerThreeCharMonth(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+            mDORText.setText(formattedDate);
         }
     };
 
     private DatePickerDialog.OnDateSetListener myDESListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mDESText.setText(monthOfYear + "/" + dayOfMonth + "/" + year);
+            DateHelper dh = new DateHelper();
+            String formattedDate = dh.DateChangerThreeCharMonth(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+            mDESText.setText(formattedDate);
         }
     };
 

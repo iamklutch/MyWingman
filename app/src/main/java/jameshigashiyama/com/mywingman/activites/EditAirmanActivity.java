@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
@@ -25,16 +27,15 @@ import jameshigashiyama.com.mywingman.Airman;
 import jameshigashiyama.com.mywingman.R;
 import jameshigashiyama.com.mywingman.adapters.SpinnerHelperAdapter;
 import jameshigashiyama.com.mywingman.db.DatabaseMethods;
-import jameshigashiyama.com.mywingman.holders.AirmanViewHolder;
+import jameshigashiyama.com.mywingman.support.DateHelper;
 import jameshigashiyama.com.mywingman.support.RankHelper;
 
-public class EditAirmanActivity extends ActionBarActivity {
+public class EditAirmanActivity extends ActionBarActivity{
 
-    @InjectView(R.id.viewLastNameAEA)    TextView mViewLastNameText;
+
     @InjectView(R.id.editLastNameAEA)    TextView mEditLastNameText;
-    @InjectView(R.id.viewFirstNameAEA)    TextView mViewFirstNameText;
     @InjectView(R.id.editFirstNameAEA)    TextView mEditFirstNameText;
-    @InjectView(R.id.viewLastFourAEA)    TextView mViewLastFour;
+    @InjectView(R.id.editLastFourAEA)   TextView mEditLastFour;
     @InjectView(R.id.DORtextViewAEA)    TextView mDORText;
     @InjectView(R.id.DEStextViewAEA)    TextView mDESText;
     @InjectView(R.id.DORdateButtonAEA)    Button mDORButton;
@@ -63,7 +64,9 @@ public class EditAirmanActivity extends ActionBarActivity {
         addListenerOnSpinnerItemSelection();
         addListenerOnButton();
 
-
+        AdView mAdView = (AdView) findViewById(R.id.adViewEditAirman);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override
@@ -88,14 +91,12 @@ public class EditAirmanActivity extends ActionBarActivity {
             case R.id.action_save_airman:
                 updateAirman();
                 Intent intent = new Intent(this, ViewAirmenActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
             case R.id.action_edit_delete:
                 DatabaseMethods dbm = new DatabaseMethods(EditAirmanActivity.this);
                 dbm.delete(mDatabaseId);
                 intent = new Intent(this, ViewAirmenActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
                 break;
@@ -159,21 +160,29 @@ public class EditAirmanActivity extends ActionBarActivity {
     @SuppressWarnings("deprecation")
     @Override
     protected Dialog onCreateDialog(int id) {
-        //gets current date
-        Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DATE);
-
+        //gets previously input date
         if (id == 999) {
+            int year, month, day;
+            String date = mDORText.getText().toString();
+            DateHelper dh = new DateHelper();
+            year = dh.DateYearStripper(date);
+            month = dh.DateMonthStripper(date);
+            day = dh.DateDayStripper(date);
             DatePickerDialog DORDateDialog = new DatePickerDialog
-                    (this, myDORListener, mYear, mMonth, mDay);
+                    (this, myDORListener, year, month, day);
             DORDateDialog.getDatePicker().setSpinnersShown(true);
             return DORDateDialog;
         } else {
+            //gets previously input date
+            int year, month, day;
+            String date = mDESText.getText().toString();
+            DateHelper dh = new DateHelper();
+            year = dh.DateYearStripper(date);
+            month = dh.DateMonthStripper(date);
+            day = dh.DateDayStripper(date);
             DatePickerDialog DESDateDialog = new DatePickerDialog
-                    (this, myDESListener, mYear, mMonth, mDay);
-            DESDateDialog.getDatePicker().setMinDate(1788922061);
+                    (this, myDESListener, year, month, day);
+            DESDateDialog.getDatePicker().setSpinnersShown(true);
             return DESDateDialog;
         }
     }
@@ -181,14 +190,19 @@ public class EditAirmanActivity extends ActionBarActivity {
     private DatePickerDialog.OnDateSetListener myDORListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mDORText.setText(monthOfYear + "/" + dayOfMonth + "/" + year);
+            DateHelper dh = new DateHelper();
+            String formattedDate = dh.DateChangerThreeCharMonth(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+            mDORText.setText(formattedDate);
         }
     };
 
     private DatePickerDialog.OnDateSetListener myDESListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mDESText.setText(monthOfYear + "/" + dayOfMonth + "/" + year);
+            DateHelper dh = new DateHelper();
+            String formattedDate = dh.DateChangerThreeCharMonth(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+            String addedMonths = dh.AddMonths(formattedDate);
+            mDESText.setText(addedMonths);
         }
     };
 
@@ -214,7 +228,7 @@ public class EditAirmanActivity extends ActionBarActivity {
         mRank = rankSpin.getSelectedItem().toString();
         RankHelper rank = new RankHelper();
         int rankValue = rank.RankValueHelper(mRank);
-        String lastFour = mViewLastFour.getText().toString();
+        String lastFour = mEditLastFour.getText().toString();
         String DOR = mDORText.getText().toString();
         String DES = mDESText.getText().toString();
 
@@ -239,7 +253,7 @@ public class EditAirmanActivity extends ActionBarActivity {
 
         // Saves everything in the Airman Object to the database
         DatabaseMethods databaseMethods = new DatabaseMethods(EditAirmanActivity.this);
-        databaseMethods.update(mAirman);
+        databaseMethods.update(mAirman, mDatabaseId);
 
         return true;
     }
@@ -252,11 +266,12 @@ public class EditAirmanActivity extends ActionBarActivity {
         mDatabaseId = airman.getId();
         mAgeSetSpinner = Integer.parseInt(airman.getAge());
         mRankSetSpinner = airman.getRankValue();
-        mViewLastNameText.setText(airman.getLastName());
-        mViewFirstNameText.setText(airman.getFirstName());
+        mEditLastNameText.setText(airman.getLastName());
+        mEditFirstNameText.setText(airman.getFirstName());
         mDORText.setText(airman.getDOR());
         mDESText.setText(airman.getDES());
-        mViewLastFour.setText(airman.getLastFour());
+        mEditLastFour.setText(airman.getLastFour());
 
     }
+
 }

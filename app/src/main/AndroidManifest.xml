@@ -30,12 +30,16 @@
             android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".activites.LoginActivity"
+            android:theme="@style/NoActionBar"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
             android:name=".activites.SignUpActivity"
+            android:theme="@style/NoActionBar"
             android:label="@string/title_activity_sign_up"
-            android:parentActivityName=".activites.LoginActivity" >
+            android:parentActivityName=".activites.LoginActivity"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activites.LoginActivity" />
@@ -47,10 +51,12 @@
         </activity>
         <activity
             android:name=".activites.AddAirmanActivity"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_add_airman" >
         </activity>
         <activity
             android:name=".activites.EditAirmanActivity"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_edit_airman"
             android:parentActivityName=".activites.ViewAirmenActivity" >
             <meta-data
