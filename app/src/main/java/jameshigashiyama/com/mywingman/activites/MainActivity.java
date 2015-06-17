@@ -1,9 +1,8 @@
 package jameshigashiyama.com.mywingman.activites;
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,14 +13,18 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.AdRequest;
 import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import jameshigashiyama.com.mywingman.R;
 import jameshigashiyama.com.mywingman.db.DatabaseMethods;
+import jameshigashiyama.com.mywingman.db.ParseMethods;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity { // implements ActionBar.TabListener{
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    public static final int BACKUP = 0;
+    public static final int RESTORE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +35,18 @@ public class MainActivity extends ActionBarActivity {
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
         ParseUser currentUser = ParseUser.getCurrentUser();
 
+
         if (currentUser == null) {
             navigateToLogin();
         } else if (currentUser.isNew()) {
             DatabaseMethods db = new DatabaseMethods(this);
-            db.createDummyAirman();
-            navigateToAddAirman();
+            boolean created = db.createUserEntry(currentUser.getUsername());
+            if (created == true) {
+                db.createDummyAirman();
+            } else {
+                Toast.makeText(this, "Problem creating database", Toast.LENGTH_SHORT).show();
+            }
+//            navigateToAddAirman();
         } else {
 
 
@@ -65,6 +74,11 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    private void navigateToSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,6 +99,15 @@ public class MainActivity extends ActionBarActivity {
                 ParseUser.logOut();
                 navigateToLogin();
                 break;
+            case R.id.action_settings:
+                navigateToSettings();
+                break;
+            case R.id.action_backup_restore:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setItems(R.array.backup_restore, mDialogListener);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                break;
             case R.id.action_add_airman:
                 navigateToAddAirman();
                 break;
@@ -95,20 +118,27 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void alertUserAboutError() {
-        AlertDialogFragment dialog = new AlertDialogFragment();
-        dialog.show(getFragmentManager(), "error_dialog");
-    }
+    protected DialogInterface.OnClickListener mDialogListener = new DialogInterface.OnClickListener() {
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-        boolean isAvailable = false;
-
-        if (networkInfo != null && networkInfo.isConnected()) {
-            isAvailable = true;
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case 0:
+                    ParseMethods pm = new ParseMethods();
+                    ParseObject message = pm.createMessage(MainActivity.this);
+                    if (message == null) {
+                            Toast.makeText(MainActivity.this, "Problem sending message", Toast.LENGTH_SHORT).show();
+                        } else {
+                            pm.send(message);
+                        }
+                    break;
+                case 1:
+                    Toast.makeText(MainActivity.this,
+                            "Restore Database", Toast.LENGTH_SHORT).show();
+                            ParseMethods pmm = new ParseMethods();
+                            pmm.retrieveDatabase();
+                    break;
+            }
         }
-        return isAvailable;
-    }
-
+    };
 }

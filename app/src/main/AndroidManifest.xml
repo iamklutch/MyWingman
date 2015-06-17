@@ -30,16 +30,16 @@
             android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".activites.LoginActivity"
+            android:label="@string/title_activity_login"
             android:theme="@style/NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/title_activity_login" >
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".activites.SignUpActivity"
-            android:theme="@style/NoActionBar"
             android:label="@string/title_activity_sign_up"
             android:parentActivityName=".activites.LoginActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:theme="@style/NoActionBar"
+            android:windowSoftInputMode="adjustPan" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activites.LoginActivity" />
@@ -51,17 +51,25 @@
         </activity>
         <activity
             android:name=".activites.AddAirmanActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/title_activity_add_airman" >
+            android:label="@string/title_activity_add_airman"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".activites.EditAirmanActivity"
-            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_edit_airman"
-            android:parentActivityName=".activites.ViewAirmenActivity" >
+            android:parentActivityName=".activites.ViewAirmenActivity"
+            android:windowSoftInputMode="adjustPan" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jameshigashiyama.com.mywingman.activites.ViewAirmenActivity" />
+        </activity>
+        <activity
+            android:name=".activites.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".activites.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jameshigashiyama.com.mywingman.activites.MainActivity" />
         </activity>
     </application>
 

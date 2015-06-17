@@ -7,6 +7,7 @@ package jameshigashiyama.com.mywingman;
 public class Airman {
 
     private int id;
+    private int parentId;
     private String mLastName;
     private String mFirstName;
     private String mAge;
@@ -16,13 +17,19 @@ public class Airman {
     private String mDOR;
     private String mDES;
 
-    public Airman(int id, String lastName, String firstName, String age, String rank,
+    public Airman(int id, int parentId, String lastName, String firstName, String age, String rank,
                   int rankValue, String lastFour, String DOR, String DES) {
 
      }
+
+
     public int getId() {return id;    }
 
     public void setId(int id) {this.id = id;}
+
+    public int getParentId() {return parentId;}
+
+    public void setParentId(int parentId) { this.parentId = parentId;}
 
     public String getLastName() {return mLastName;}
 

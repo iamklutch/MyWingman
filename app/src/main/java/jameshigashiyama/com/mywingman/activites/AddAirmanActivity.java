@@ -75,7 +75,6 @@ public class AddAirmanActivity extends ActionBarActivity {
         switch (id) {
             case R.id.action_save_airman:
                 saveAirman();
-
                 Intent intent = new Intent(AddAirmanActivity.this, AddAirmanActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -199,8 +198,14 @@ public class AddAirmanActivity extends ActionBarActivity {
     }
 
     protected boolean saveAirman(){
+        if (mLastFour.length() > 4){
+            Toast.makeText(this, getString(R.string.ssn_warning), Toast.LENGTH_LONG).show();
+        }
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         String cipher = currentUser.getObjectId();
+        DatabaseMethods db = new DatabaseMethods(this);
+        int parentId = db.getParentId();
 
         String lastName = mLastName.getText().toString();
         String firstName = mFirstName.getText().toString();
@@ -221,7 +226,8 @@ public class AddAirmanActivity extends ActionBarActivity {
         String encryptedDOR = encryptThis(cipher, DOR);
         String encryptedDES = encryptThis(cipher, DES);
 
-        mAirman = new Airman(0, "", "", "", "", 0, "", "", "");
+        mAirman = new Airman(0, 0, "", "", "", "", 0, "", "", "");
+        mAirman.setParentId(parentId);
         mAirman.setLastName(encryptedLastName);
         mAirman.setFirstName(encryptedFirstName);
         mAirman.setAge(encryptedAge);
@@ -233,7 +239,7 @@ public class AddAirmanActivity extends ActionBarActivity {
 
         // Saves everything in the Airman Object to the database
         DatabaseMethods databaseMethods = new DatabaseMethods(AddAirmanActivity.this);
-        databaseMethods.create(mAirman);
+        databaseMethods.create(mAirman, parentId);
 
         return true;
     }

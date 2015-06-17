@@ -42,8 +42,6 @@ public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // request.Win blah blah needs to be BEFORE the setContentView.  otherwise it will crASh
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
 
@@ -94,7 +92,7 @@ public class LoginActivity extends ActionBarActivity {
                         ParseUser.logInInBackground(username, password, new LogInCallback() {
                             @Override
                             public void done(ParseUser user, ParseException e) {
-                                setSupportProgressBarIndeterminateVisibility(false);
+
                                 if (e == null) {
                                     // success logging in
                                     mProgressBar.setVisibility(View.INVISIBLE);

@@ -113,7 +113,7 @@ public class ViewAirmenActivity extends ActionBarActivity {
             mRecyclerView.setLayoutManager(layoutManager);
             mAirmanAdapter = new AirmanAdapter(this.getActivity(), airmen);
             mRecyclerView.setAdapter(mAirmanAdapter);
-             return rootView;
+            return rootView;
         }
     }
 

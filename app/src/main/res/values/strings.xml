@@ -15,7 +15,7 @@
     <string name="password_hint">Password</string>
     <string name="username_login_hint">Enter a Username</string>
     <string name="signup_button_label">Sign up!</string>
-    <string name="signup_error_message">Please make sure you enter a username, password, and email address</string>
+    <string name="signup_error_message">User names must be at least 5 characters, Passwords must be at least 8 characters</string>
 
     <string name="action_logout">Log out</string>
     <string name="title_activity_sign_up">Sign Up!</string>
@@ -49,9 +49,9 @@
         <item>CMSgt</item>
     </string-array>
 
-    <string-array name="airman_edit_delete">
-        <item>Edit Airman</item>
-        <item>Delete Airman</item>
+    <string-array name="backup_restore">
+        <item>Backup Database</item>
+        <item>Restore Database</item>
     </string-array>
     <string name="title_activity_edit_airman">EditAirmanActivity</string>
 
@@ -63,5 +63,7 @@
     <string name="edit_des">Edit DES</string>
     <string name="edit_dor">Edit DOR</string>
     <string name="age">Age</string>
+    <string name="ssn_warning">Adding more than 4 digits of the SSN is NOT advised.</string>
+    <string name="backup_restore_database_title">Backup/Restore</string>
 
 </resources>

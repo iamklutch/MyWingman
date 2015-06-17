@@ -219,6 +219,10 @@ public class EditAirmanActivity extends ActionBarActivity{
     }
 
     protected boolean updateAirman() {
+        if (mEditLastFour.length() > 4){
+            Toast.makeText(this, getString(R.string.ssn_warning), Toast.LENGTH_LONG).show();
+        }
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         String cipher = currentUser.getObjectId();
 
@@ -241,7 +245,7 @@ public class EditAirmanActivity extends ActionBarActivity{
         String encryptedDOR = encryptThis(cipher, DOR);
         String encryptedDES = encryptThis(cipher, DES);
 
-        mAirman = new Airman(0, "", "", "", "", 0, "", "", "");
+        mAirman = new Airman(0, 0,"", "", "", "", 0, "", "", "");
         mAirman.setLastName(encryptedLastName);
         mAirman.setFirstName(encryptedFirstName);
         mAirman.setAge(encryptedAge);
@@ -264,6 +268,7 @@ public class EditAirmanActivity extends ActionBarActivity{
 
 
         mDatabaseId = airman.getId();
+        int parentId = airman.getParentId();
         mAgeSetSpinner = Integer.parseInt(airman.getAge());
         mRankSetSpinner = airman.getRankValue();
         mEditLastNameText.setText(airman.getLastName());

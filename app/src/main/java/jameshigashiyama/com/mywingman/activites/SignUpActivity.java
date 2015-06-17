@@ -58,12 +58,12 @@ public class SignUpActivity extends ActionBarActivity {
                 password = password.trim();
                 email = email.trim();
 
-                if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+                if (username.isEmpty() || password.isEmpty() || email.isEmpty() ||
+                        username.length() < 5 || password.length() < 8) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                     builder.setMessage(R.string.signup_error_message)
                             .setTitle(R.string.signup_error_title)
                             .setPositiveButton(android.R.string.ok, null);
-
                     AlertDialog dialog = builder.create();
                     dialog.show();
 
@@ -80,6 +80,7 @@ public class SignUpActivity extends ActionBarActivity {
                             if (e == null) {
                                 // success creating user
                                 mProgressBar.setVisibility(View.INVISIBLE);
+
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -90,7 +91,6 @@ public class SignUpActivity extends ActionBarActivity {
                                 builder.setMessage(e.getMessage())
                                         .setTitle(R.string.signup_error_title)
                                         .setPositiveButton(android.R.string.ok, null);
-
                                 AlertDialog dialog = builder.create();
                                 dialog.show();
                             }

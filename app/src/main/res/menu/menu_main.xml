@@ -5,8 +5,16 @@
 
       <item android:id="@+id/action_logout"
             android:title="@string/action_logout"
-            android:orderInCategory="100"
-            app:showAsAction="always"/>
+            android:orderInCategory="103"
+            app:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+          android:title="@string/action_settings"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_backup_restore"
+          android:title="@string/backup_restore_database_title"
+          android:orderInCategory="102"
+          app:showAsAction="never"/>
     <item  android:id="@+id/action_add_airman"
            android:title="Add Airman"
            android:icon="@drawable/ic_action_add_person"
