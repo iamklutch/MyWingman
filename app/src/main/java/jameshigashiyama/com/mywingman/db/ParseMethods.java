@@ -45,6 +45,7 @@ public class ParseMethods {
         Uri mFileUri = getOutputMediaFileUri();
         ParseObject message = new ParseObject(ParseConstants.USER_DATABASE);
         message.put(ParseConstants.USER_NAME, ParseUser.getCurrentUser().getUsername());
+        message.put(ParseConstants.UPLOADED_BY, ParseUser.getCurrentUser().getObjectId());
 
         byte[] fileBytes = getByteArrayFromFile(context, mFileUri);
 
@@ -52,14 +53,14 @@ public class ParseMethods {
             return null;
         }
         else {
-            ParseFile file = new ParseFile("AIRMANDB", fileBytes);
+            ParseFile file = new ParseFile("airmanDatabase.db", fileBytes);
             message.put(ParseConstants.KEY_FILE, file);
             return message;
         }
     }
 
     public Uri getOutputMediaFileUri() {
-        return Uri.fromFile(new File("data/data/jameshigashiyama.com.mywingman/databases/AIRMANDB"));
+        return Uri.fromFile(new File("data/data/jameshigashiyama.com.mywingman/databases/airmanDatabase.db"));
     }
 
     private String timeNow () {
@@ -117,7 +118,7 @@ public class ParseMethods {
     public void retrieveDatabase () {
 
         ParseQuery<ParseObject> query = new ParseQuery<>(ParseConstants.USER_DATABASE);
-        query.whereEqualTo("AIRMANDB", "file");
+        query.whereEqualTo(ParseConstants.UPLOADED_BY, ParseUser.getCurrentUser().getObjectId());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
@@ -125,17 +126,24 @@ public class ParseMethods {
                 boolean noFile = list.isEmpty();
                 try {
                     ParseObject parseObject = list.get(0);
-                    ParseFile byteFile = (ParseFile) parseObject.getParseFile("AIRMANDB");
-                    byteFile.getDataInBackground(new GetDataCallback() {
-                        @Override
-                        public void done(byte[] bytes, ParseException e) {
-                            if (e == null) {
-                                getFileFromByteArray(bytes, "data/data/jameshigashiyama.com.mywingman/databases/AIRMANDB");
-                            } else {
-                                //                     Log.d(, "Error: ");
-                            }
-                        }
-                    });
+                    boolean dataAvail = parseObject.isDataAvailable();
+                    ParseFile parseFile = parseObject.getParseFile("file");
+                    try {
+                        byte[] bytes = parseFile.getData();
+                        getFileFromByteArray(bytes, "data/data/jameshigashiyama.com.mywingman/databases/airmanDatabase.db");
+                    } catch (ParseException pe) {
+                        // didn't get filr
+                    }
+//                    byteFile.getDataInBackground(new GetDataCallback() {
+//                        @Override
+//                        public void done(byte[] bytes, ParseException e) {
+//                            if (e == null) {
+//                                getFileFromByteArray(bytes, "data/data/jameshigashiyama.com.mywingman/databases/airmanDatabase.db");
+//                            } else {
+//                                //                     Log.d(, "Error: ");
+//                            }
+//                        }
+//                    });
                 } finally {
                     //do some shit
                 }
