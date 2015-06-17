@@ -269,10 +269,10 @@ public class EditAirmanActivity extends ActionBarActivity{
 
         mDatabaseId = airman.getId();
         int parentId = airman.getParentId();
-        mAgeSetSpinner = Integer.parseInt(airman.getAge());
-        mRankSetSpinner = airman.getRankValue();
-        mEditLastNameText.setText(airman.getLastName());
         mEditFirstNameText.setText(airman.getFirstName());
+        mEditLastNameText.setText(airman.getLastName());
+        mRankSetSpinner = airman.getRankValue();
+        mAgeSetSpinner = Integer.parseInt(airman.getAge());
         mDORText.setText(airman.getDOR());
         mDESText.setText(airman.getDES());
         mEditLastFour.setText(airman.getLastFour());

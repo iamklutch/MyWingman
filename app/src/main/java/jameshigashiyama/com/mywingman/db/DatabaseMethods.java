@@ -159,14 +159,15 @@ public class DatabaseMethods {
         cursor.moveToFirst();
 
         int id = cursor.getInt(0);
-        String lastName = cursor.getString(1);
-        String firstName = cursor.getString(2);
-        String age = cursor.getString(3);
-        String rank = cursor.getString(4);
-        int rankValue = cursor.getInt(5);
-        String lastFour = cursor.getString(6);
-        String DOR = cursor.getString(7);
-        String DES = cursor.getString(8);
+        parentId = cursor.getInt(1);
+        String lastName = cursor.getString(2);
+        String firstName = cursor.getString(3);
+        String age = cursor.getString(4);
+        String rank = cursor.getString(5);
+        int rankValue = cursor.getInt(6);
+        String lastFour = cursor.getString(7);
+        String DOR = cursor.getString(8);
+        String DES = cursor.getString(9);
 
         String decryptedLastName, decryptedFirstName, decryptedAge, decryptedRank,
                 decryptedLastFour, decryptedDOR, decryptedDES;
